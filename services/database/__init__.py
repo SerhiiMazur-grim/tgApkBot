@@ -1,6 +1,6 @@
 from .create_pool import create_pool
-from .models import Base, DBUser
-from .repositories import Repository, UserRepository
+from .models import Base, DBUser, SubChannel
+from .repositories import Repository, UserRepository, SubChannelRepository
 
 __all__ = [
     "create_pool",
@@ -8,4 +8,5 @@ __all__ = [
     "DBUser",
     "Repository",
     "UserRepository",
+    "SubChannelRepository"
 ]

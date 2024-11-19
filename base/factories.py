@@ -78,7 +78,7 @@ def create_dispatcher(settings: Settings) -> Dispatcher:
     
     dispatcher.include_routers(
         main.router,
-        # admin.router,
+        admin.router,
         # user.router
     )
     
