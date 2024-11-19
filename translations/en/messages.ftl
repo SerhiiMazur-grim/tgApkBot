@@ -4,5 +4,5 @@ messages-language_is_set = Language changed successfully.
 
 messages-something_went_wrong = Oops! Something went wrong...
 
-button-do_some = just button
+button-do_some = it's just button
 button-back_to_main_rkb = ⬅️Main menu
