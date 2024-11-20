@@ -4,16 +4,18 @@ from typing import Any, Final, TYPE_CHECKING
 
 from aiogram import Bot, Router, F
 from aiogram.methods import TelegramMethod
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram_i18n import I18nContext, LazyProxy
 
-from app.keyboards.inline_kb.user_ikb import apk_files_ikb
+from app.keyboards.inline_kb.user_ikb import apk_files_ikb, galery_ikb
 from app.filters import PrivateChatFilter
+from app.state.user_state import CatalogState
 from utils import clear_state, is_subscribe
+from app.dialogs.user_dialogs import CatalogDialog
 
 if TYPE_CHECKING:
-    from services.database import DBUser, SubChannel, Repository
+    from services.database import DBUser, Repository
 
 
 router: Final[Router] = Router(name=__name__)
@@ -34,8 +36,22 @@ async def get_apk_handler(message: Message, bot:Bot, user: DBUser,
 
 
 @router.message(PrivateChatFilter(), F.text == LazyProxy('button-galery'))
-async def to_galery(message: Message, i18n: I18nContext, state: FSMContext) -> TelegramMethod[Any]:
+async def to_galery(message: Message, i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod[Any]:
     await clear_state(state)
     await message.delete()
     
-    return message.answer(text='Go to galery SUCSSES!!!')
+    catalog = await repository.galery.get_all_image_ids()
+    await state.set_state(CatalogState.page)
+    await state.update_data({
+        'catalog': catalog,
+        'pages': len(catalog),
+        'page': 1,
+    })
+    return message.answer_photo(photo=catalog[0],
+                                reply_markup=galery_ikb('1', len(catalog)))
+
+
+@router.callback_query(CatalogState.page)
+async def foo(callback_query: CallbackQuery = None, state: FSMContext = None, repository: Repository = None):
+    dialog = CatalogDialog(callback_query, state, repository)
+    await dialog.dialog_window()

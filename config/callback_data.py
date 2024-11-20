@@ -1,3 +1,6 @@
 ABORT_COMMAND = 'abort_command'
 APK_1 = 'apk_1'
 APK_2 = 'apk_2'
+NEXT = 'next'
+PREV = 'prev'
+DELL = 'dell'
