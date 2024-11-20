@@ -18,6 +18,10 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
                    description='–  Get the image ID'),
         BotCommand(command='add_sub_channel',
                    description='–  Add channel for subscibe'),
+        BotCommand(command='all_sub_channel',
+                   description='–  Show all channels for subscibe'),
+        BotCommand(command='delete_sub_channel',
+                   description='–  Delete channel for subscibe'),
     ]
     
     admin_commands = all_private_chats_commands + admin_commands

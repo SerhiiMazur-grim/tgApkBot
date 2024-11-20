@@ -39,7 +39,7 @@ def _setup_outer_middlewares(dispatcher: Dispatcher, settings: Settings) -> None
         default_locale=Locale.DEFAULT,
     )
 
-    dispatcher.update.outer_middleware(ForbiddenErrorMiddleware())
+    # dispatcher.update.outer_middleware(ForbiddenErrorMiddleware())
     dispatcher.update.outer_middleware(DBSessionMiddleware(session_pool=pool))
     dispatcher.update.outer_middleware(UserMiddleware())
     i18n_middleware.setup(dispatcher=dispatcher)
@@ -79,7 +79,7 @@ def create_dispatcher(settings: Settings) -> Dispatcher:
     dispatcher.include_routers(
         main.router,
         admin.router,
-        # user.router
+        user.router
     )
     
     _setup_outer_middlewares(dispatcher=dispatcher, settings=settings)

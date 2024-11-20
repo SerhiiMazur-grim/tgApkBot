@@ -5,7 +5,15 @@ messages-send_image_to_get_id = Send a picture and I'll tell you its ID
 messages-is_not_image_for_get_id = You did not send an image, please send an image
 messages-get_channel_username = Send me username of channel⤵️
 messages-is_not_channel_username = Is not Channel username, send me channel username please⤵️
+messages-get_invate_url = Send me invate url⤵️
+messages-is_not_invate_url = Is not invate url, send me invate url please⤵️
 messages-sub_channel_added = Channel added for subscibe👍
+messages-sub_channel_list = Channels list⤵️
+    { $channels_list }
+messages-delete_sub_channel = Choose channel to delete⤵️
+messages-no_sub_channels = Channel list is empty
+messages-sub_channel_is_delete = Channel { $username } successfully delete!
+messages-you_not_sub = You not sub on this channels, please subscibe to continue
 
 messages-something_went_wrong = Oops! Something went wrong... 
 

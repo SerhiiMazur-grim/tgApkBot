@@ -7,3 +7,8 @@ class GetImageIdState(StatesGroup):
 
 class GetChannelUsernameState(StatesGroup):
     username = State()
+    invate_url = State()
+
+
+class DelSubChannelState(StatesGroup):
+    id = State()

@@ -13,3 +13,4 @@ class SubChannel(Base, TimestampMixin):
     
     id: Mapped[Int64] = mapped_column(primary_key=True)
     username: Mapped[str]
+    invate_url: Mapped[str]

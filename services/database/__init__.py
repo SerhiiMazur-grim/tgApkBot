@@ -8,5 +8,6 @@ __all__ = [
     "DBUser",
     "Repository",
     "UserRepository",
+    "SubChannel",
     "SubChannelRepository"
 ]

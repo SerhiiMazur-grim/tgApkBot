@@ -52,3 +52,8 @@ class UserRepository(BaseRepository):
 
         await self.commit(db_user)
         return db_user
+    
+    
+    async def update_user_subscribe(self, user: DBUser, subscribe = True):
+        user.subscribe = subscribe
+        await self.commit(user)
