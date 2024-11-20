@@ -16,6 +16,8 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
     admin_commands = [
         BotCommand(command='image_id',
                    description='–  Get the image ID'),
+        BotCommand(command='add_image_to_galery',
+                   description='–  Add images to galery'),
         BotCommand(command='add_sub_channel',
                    description='–  Add channel for subscibe'),
         BotCommand(command='all_sub_channel',

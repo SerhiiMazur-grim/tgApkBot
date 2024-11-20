@@ -12,3 +12,7 @@ class GetChannelUsernameState(StatesGroup):
 
 class DelSubChannelState(StatesGroup):
     id = State()
+
+
+class AddImgToGalery(StatesGroup):
+    img = State()

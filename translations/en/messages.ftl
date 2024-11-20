@@ -14,10 +14,16 @@ messages-delete_sub_channel = Choose channel to delete⤵️
 messages-no_sub_channels = Channel list is empty
 messages-sub_channel_is_delete = Channel { $username } successfully delete!
 messages-you_not_sub = You not sub on this channels, please subscibe to continue
+messages-choose_apk = Choose APK to download⤵️
+messages-send_me_images = Send me one or many images for adding to galery⤵️
+messages-imgs_added = Images(image) added to galery👍
 
 messages-something_went_wrong = Oops! Something went wrong... 
 
-button-do_some = it's just button
+button-get_apk = APK file
+button-galery = Galery
 button-back_to_main_rkb = ⬅️Main menu
 
+ik_button-apk_1 = APK 1
+ik_button-apk_2 = APK 2
 ik_button-abort = ❌Cancel
