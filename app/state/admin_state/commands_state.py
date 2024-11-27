@@ -16,3 +16,14 @@ class DelSubChannelState(StatesGroup):
 
 class AddImgToGalery(StatesGroup):
     img = State()
+
+
+class GetRefStartState(StatesGroup):
+    ref = State()
+    en = State()
+    ua = State()
+    ru = State()
+
+
+class DelRefStartState(StatesGroup):
+    id = State()

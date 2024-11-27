@@ -6,7 +6,8 @@ from .commands_handlers import (
     image_id,
     abort_command,
     sub_channels,
-    add_image
+    add_image,
+    ref_start_message
 )
 
 
@@ -16,5 +17,6 @@ router.include_routers(
     image_id.router,
     abort_command.router,
     sub_channels.router,
-    add_image.router
+    add_image.router,
+    ref_start_message.router
 )

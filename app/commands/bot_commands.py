@@ -24,6 +24,10 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
                    description='–  Show all channels for subscibe'),
         BotCommand(command='delete_sub_channel',
                    description='–  Delete channel for subscibe'),
+        BotCommand(command='add_ref_start',
+                   description='–  Add greetings for referral url'),
+        BotCommand(command='delete_ref_start',
+                   description='–  Delete greetings for referral url'),
     ]
     
     admin_commands = all_private_chats_commands + admin_commands

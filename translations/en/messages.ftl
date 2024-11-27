@@ -19,6 +19,18 @@ messages-choose_apk = Choose APK to download⤵️
 messages-send_me_images = Send me one or many images for adding to gallery⤵️
 messages-imgs_added = Images(image) added to gallery👍
 messages-catalog_empty = Sory gallery is empty now😢
+messages-add_ref = Send me referral ident⤵️
+messages-ref_too_long = Referral ident too long (more then 64 characters)
+    Please send me correct referral ident👍⤵️
+messages-add_en_text = Send me EN greetings text⤵️
+messages-add_ua_text = Send me UA greetings text⤵️
+messages-add_ru_text = Send me RU greetings text⤵️
+messages-ref_wrong_data = You send me wrong data😢
+    Please send me correct data👍⤵️
+messages-ref_created = Referral { $ref } and greetings is created successfully👍
+messages-choose_ref_to_dell = Choose referral ident to delete⤵️
+messages-no_ref_to_dell = No referral ident to delete❗️
+messages-ref_is_dell = { $ref } is deleted successfully👍
 
 messages-something_went_wrong = Oops! Something went wrong... 
 

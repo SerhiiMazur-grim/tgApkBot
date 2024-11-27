@@ -2,7 +2,7 @@ from typing import Optional, cast
 
 from aiogram.enums import ChatType
 from aiogram.types import Chat, User
-from sqlalchemy import select, update, values
+from sqlalchemy import select, update, values, delete
 
 from ..models import DBUser
 from .base import BaseRepository
@@ -57,3 +57,13 @@ class UserRepository(BaseRepository):
     async def update_user_subscribe(self, user: DBUser, subscribe = True):
         user.subscribe = subscribe
         await self.commit(user)
+    
+    
+    async def delete_user(self, user_id):
+        user_id = int(user_id)
+        rez = await self._session.execute(
+            delete(DBUser).where(DBUser.id == user_id).returning(DBUser)
+        )
+        deleted_user = rez.scalars().first()
+        await self.commit()
+        return deleted_user.name
