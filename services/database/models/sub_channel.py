@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-from aiogram import html
-from aiogram.utils.link import create_tg_link
-from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base, Int64, TimestampMixin

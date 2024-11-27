@@ -37,10 +37,14 @@ async def get_apk_handler(message: Message, bot:Bot, user: DBUser,
 
 @router.message(PrivateChatFilter(), F.text == LazyProxy('button-galery'))
 async def to_galery(message: Message, i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod[Any]:
+    user_id = message.chat.id
     await clear_state(state)
     await message.delete()
     
     catalog = await repository.galery.get_all_image_ids()
+    if not catalog:
+        return message.answer(text=i18n.messages.catalog_empty())
+    
     await state.set_state(CatalogState.page)
     await state.update_data({
         'catalog': catalog,
@@ -48,10 +52,11 @@ async def to_galery(message: Message, i18n: I18nContext, state: FSMContext, repo
         'page': 1,
     })
     return message.answer_photo(photo=catalog[0],
-                                reply_markup=galery_ikb('1', len(catalog)))
+                                reply_markup=galery_ikb('1', len(catalog), user_id))
 
 
 @router.callback_query(CatalogState.page)
-async def foo(callback_query: CallbackQuery = None, state: FSMContext = None, repository: Repository = None):
-    dialog = CatalogDialog(callback_query, state, repository)
+async def galery_dialog(callback_query: CallbackQuery = None, state: FSMContext = None, repository: Repository = None):
+    user_id = callback_query.from_user.id
+    dialog = CatalogDialog(callback_query, state, repository, user_id)
     await dialog.dialog_window()

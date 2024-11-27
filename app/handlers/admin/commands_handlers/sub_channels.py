@@ -36,27 +36,14 @@ async def get_sub_channel_username(message: Message, bot: Bot, i18n: I18nContext
     if not message.text:
         return message.answer(text=i18n.messages.is_not_channel_username(),
                               reply_markup=abort_command_ikb(i18n))
-        
-    if message.text.startswith('@'):
-        username: str = message.text.strip()
-    elif message.text.startswith('t.me/'):
-        username: str = '@' + message.text.split('/')[-1].strip()
-    else:
-        return message.answer(text=i18n.messages.is_not_channel_username(),
-                              reply_markup=abort_command_ikb(i18n))
-    
+    username: str = message.text.strip()
+    if not username.startswith('@'):
+        username = '@' + username
     await state.update_data(username=username)
     await state.set_state(GetChannelUsernameState.invate_url)
     return message.answer(text=i18n.messages.get_invate_url(),
                           reply_markup=abort_command_ikb(i18n))
     
-    # await state.clear()
-    # try:
-    #     await repository.sub_channel.create_from_telegram(bot, username)
-    #     return message.answer(text=i18n.messages.sub_channel_added())
-    # except:
-    #     return message.answer(text=i18n.messages.something_went_wrong())
-
 
 @router.message(GetChannelUsernameState.invate_url)
 async def get_invate_url(message: Message, bot: Bot, i18n: I18nContext,
@@ -77,7 +64,7 @@ async def get_invate_url(message: Message, bot: Bot, i18n: I18nContext,
 async def show_sub_channels(message: Message, i18n: I18nContext,
                             repository: Repository) -> TelegramMethod[Any]:
     await message.delete()
-    usernames: List[str] = await repository.sub_channel.channels_usernames()
+    usernames: List[str] = await repository.sub_channel.get_all_channels_usernames()
     if usernames:
         usernames.insert(0, '')
         channels_list: str = '\n➡️'.join(usernames)

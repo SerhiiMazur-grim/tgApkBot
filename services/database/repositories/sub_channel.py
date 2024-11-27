@@ -21,13 +21,16 @@ class SubChannelRepository(BaseRepository):
         result = await self._session.scalars(select(SubChannel))
         return result.all()
 
-    
-    async def channels_ids(self) -> List[int]:
+    async def get_all_channels_ids(self) -> List[int]:
         rez = await self._session.scalars(select(SubChannel.id))
         return rez.all()
     
-    async def channels_usernames(self) -> List[str]:
+    async def get_all_channels_usernames(self) -> List[str]:
         rez = await self._session.scalars(select(SubChannel.username))
+        return rez.all()
+    
+    async def get_all_channels_invate_urls(self) -> List[str]:
+        rez = await self._session.scalars(select(SubChannel.invate_url))
         return rez.all()
         
 
