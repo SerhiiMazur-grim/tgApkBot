@@ -4,6 +4,7 @@ from .user import UserRepository
 from .sub_channel import SubChannelRepository
 from .galery import GaleryRepository
 from .ref_start import RefMessageRepository
+from .apk import APK1Repository, APK2Repository
 
 __all__ = [
     "BaseRepository",
@@ -12,5 +13,7 @@ __all__ = [
     "SubChannelRepository",
     "GaleryRepository",
     "RefMessageRepository",
+    "APK1Repository",
+    "APK2Repository",
     
 ]

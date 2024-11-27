@@ -28,6 +28,12 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
                    description='–  Add greetings for referral url'),
         BotCommand(command='delete_ref_start',
                    description='–  Delete greetings for referral url'),
+        BotCommand(command='upload_apk1',
+                   description='–  Upload APK1'),
+        BotCommand(command='upload_apk2',
+                   description='–  Upload APK2'),
+        BotCommand(command='update_apk',
+                   description='–  Update APK'),
     ]
     
     admin_commands = all_private_chats_commands + admin_commands

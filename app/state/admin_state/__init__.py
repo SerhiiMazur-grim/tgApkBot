@@ -4,7 +4,9 @@ from .commands_state import (
     DelSubChannelState,
     AddImgToGalery,
     GetRefStartState,
-    DelRefStartState
+    DelRefStartState,
+    LoadApkState,
+    UpdateApkState
 )
 
 __all__ = [
@@ -13,5 +15,8 @@ __all__ = [
     'DelSubChannelState',
     'AddImgToGalery',
     'GetRefStartState',
-    'DelRefStartState'
+    'DelRefStartState',
+    'LoadApkState',
+    'UpdateApkState',
+    
 ]

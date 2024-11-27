@@ -7,6 +7,7 @@ from .user import UserRepository
 from .sub_channel import SubChannelRepository
 from .galery import GaleryRepository
 from .ref_start import RefMessageRepository
+from .apk import APK1Repository, APK2Repository
 
 
 class Repository(BaseRepository):
@@ -18,6 +19,8 @@ class Repository(BaseRepository):
     sub_channel: SubChannelRepository
     galery: GaleryRepository
     ref_message: RefMessageRepository
+    apk1: APK1Repository
+    apk2: APK2Repository
 
     def __init__(self, session: AsyncSession) -> None:
         super().__init__(session=session)
@@ -25,3 +28,5 @@ class Repository(BaseRepository):
         self.sub_channel = SubChannelRepository(session=session)
         self.galery = GaleryRepository(session=session)
         self.ref_message = RefMessageRepository(session=session)
+        self.apk1 = APK1Repository(session=session)
+        self.apk2 = APK2Repository(session=session)

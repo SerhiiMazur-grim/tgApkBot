@@ -27,3 +27,14 @@ class GetRefStartState(StatesGroup):
 
 class DelRefStartState(StatesGroup):
     id = State()
+
+
+class LoadApkState(StatesGroup):
+    apk = State()
+    file = State()
+
+
+class UpdateApkState(StatesGroup):
+    apk = State()
+    id = State()
+    file = State()
