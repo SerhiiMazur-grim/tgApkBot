@@ -37,6 +37,9 @@ messages-choose_apk_to_update = Choose APK for update⤵️
 messages-is_not_apk_file = ERROR❗️ Is not APK file
     Send me APK file please⤵️
 messages-upload_apk_ok = File { $name } upload/update successfully👍
+messages-send_me_post = Send me your post please⤵️
+messages-is_post = This is your post? ⤵️
+messages-send_this_post = Send this post to all users?
 
 messages-something_went_wrong = Oops! Something went wrong... 
 

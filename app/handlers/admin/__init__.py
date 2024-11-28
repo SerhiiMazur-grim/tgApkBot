@@ -8,7 +8,8 @@ from .commands_handlers import (
     sub_channels,
     add_image,
     ref_start_message,
-    apk
+    apk,
+    send_post
 )
 
 
@@ -20,5 +21,6 @@ router.include_routers(
     sub_channels.router,
     add_image.router,
     ref_start_message.router,
-    apk.router
+    apk.router,
+    send_post.router
 )

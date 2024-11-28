@@ -39,3 +39,8 @@ class UpdateApkState(StatesGroup):
     apk = State()
     id = State()
     file = State()
+
+
+class PostState(StatesGroup):
+    post = State()
+    send = State()

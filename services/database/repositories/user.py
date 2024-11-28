@@ -27,6 +27,12 @@ class UserRepository(BaseRepository):
             await self._session.scalars(select(DBUser).where(DBUser.active == True)),
         )
     
+    
+    async def get_all_users_id(self):
+        rez = await self._session.scalars(select(DBUser.id))
+        return rez.all()
+    
+    
     async def get_referal_users(self, referal: str) -> Optional[DBUser]:
         return cast(
             Optional[DBUser],
@@ -56,6 +62,12 @@ class UserRepository(BaseRepository):
     
     async def update_user_subscribe(self, user: DBUser, subscribe = True):
         user.subscribe = subscribe
+        await self.commit(user)
+    
+    
+    async def update_user_active(self, user_id: int, active: bool):
+        user: DBUser = await self.get(user_id)
+        user.active = active
         await self.commit(user)
     
     

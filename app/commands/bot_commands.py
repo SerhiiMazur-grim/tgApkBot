@@ -34,6 +34,8 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
                    description='–  Upload APK2'),
         BotCommand(command='update_apk',
                    description='–  Update APK'),
+        BotCommand(command='send_post_to_all',
+                   description='–  Send your post to all users'),
     ]
     
     admin_commands = all_private_chats_commands + admin_commands

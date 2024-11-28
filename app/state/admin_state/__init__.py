@@ -6,7 +6,8 @@ from .commands_state import (
     GetRefStartState,
     DelRefStartState,
     LoadApkState,
-    UpdateApkState
+    UpdateApkState,
+    PostState
 )
 
 __all__ = [
@@ -18,5 +19,6 @@ __all__ = [
     'DelRefStartState',
     'LoadApkState',
     'UpdateApkState',
+    'PostState',
     
 ]
