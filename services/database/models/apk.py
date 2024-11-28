@@ -12,6 +12,7 @@ class APK1(Base, TimestampMixin):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String())
     file_id: Mapped[str] = mapped_column(String())
+    caption: Mapped[str] = mapped_column(String())
 
 
 class APK2(Base, TimestampMixin):
@@ -20,3 +21,4 @@ class APK2(Base, TimestampMixin):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String())
     file_id: Mapped[str] = mapped_column(String())
+    caption: Mapped[str] = mapped_column(String())

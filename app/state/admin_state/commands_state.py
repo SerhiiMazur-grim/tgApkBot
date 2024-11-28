@@ -31,6 +31,7 @@ class DelRefStartState(StatesGroup):
 
 class LoadApkState(StatesGroup):
     apk = State()
+    caption = State()
     file = State()
 
 

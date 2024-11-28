@@ -31,6 +31,7 @@ messages-ref_created = Referral { $ref } and greetings is created successfully�
 messages-choose_ref_to_dell = Choose referral ident to delete⤵️
 messages-no_ref_to_dell = No referral ident to delete❗️
 messages-ref_is_dell = { $ref } is deleted successfully👍
+messages-send_apk_caption = Send me APK caption⤵️
 messages-upload_apk = Send me APK file please⤵️
 messages-choose_apk_to_update = Choose APK for update⤵️
 messages-is_not_apk_file = ERROR❗️ Is not APK file

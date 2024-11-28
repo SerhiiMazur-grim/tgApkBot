@@ -15,7 +15,7 @@ from utils import clear_state, is_subscribe
 from app.dialogs.user_dialogs import CatalogDialog
 
 if TYPE_CHECKING:
-    from services.database import DBUser, Repository
+    from services.database import DBUser, Repository, APK1, APK2
 
 
 router: Final[Router] = Router(name=__name__)
@@ -30,9 +30,14 @@ async def get_apk_handler(message: Message, bot:Bot, user: DBUser,
     rez = await is_subscribe(message, bot, i18n, user, repository)
     if not rez:
         return
+    try:
+        apk1 = await repository.apk1.get()
+        apk2 = await repository.apk2.get()
+    except:
+        return message.answer(text=i18n.messages.something_went_wrong())
     
     return message.answer(text=i18n.messages.choose_apk(),
-                          reply_markup=apk_files_ikb(i18n))
+                          reply_markup=apk_files_ikb(i18n, apk1.name, apk2.name))
 
 
 @router.message(PrivateChatFilter(), F.text == LazyProxy('button-galery'))

@@ -25,10 +25,10 @@ router: Final[Router] = Router(name=__name__)
 async def add_apk1(message: Message, i18n: I18nContext,
                           state: FSMContext) -> TelegramMethod[Any]:
     await message.delete()
-    await state.set_state(LoadApkState.file)
+    await state.set_state(LoadApkState.caption)
     await state.update_data(apk='apk1')
     
-    return message.answer(text=i18n.messages.upload_apk(),
+    return message.answer(text=i18n.messages.send_apk_caption(),
                           reply_markup=abort_command_ikb(i18n))
 
 
@@ -36,11 +36,21 @@ async def add_apk1(message: Message, i18n: I18nContext,
 async def add_apk2(message: Message, i18n: I18nContext,
                           state: FSMContext) -> TelegramMethod[Any]:
     await message.delete()
-    await state.set_state(LoadApkState.file)
+    await state.set_state(LoadApkState.caption)
     await state.update_data(apk='apk2')
     
-    return message.answer(text=i18n.messages.upload_apk(),
+    return message.answer(text=i18n.messages.send_apk_caption(),
                           reply_markup=abort_command_ikb(i18n))
+
+
+@router.message(LoadApkState.caption)
+async def get_apk_caption(message: Message, i18n: I18nContext,
+                       state: FSMContext, repository: Repository):
+    caption = message.text
+    await state.update_data(caption=caption)
+    await state.set_state(LoadApkState.file)
+    
+    return message.answer(text=i18n.messages.upload_apk())
 
 
 @router.message(LoadApkState.file)
@@ -50,13 +60,16 @@ async def get_apk_file(message: Message, i18n: I18nContext,
     if not file:
         return message.answer(text=i18n.messages.is_not_apk_file())
     apk = await state.get_value('apk')
+    caption = await state.get_value('caption')
     await state.clear()
     if apk == 'apk1':
         await repository.apk1.create_apk(name=file.file_name,
-                                                    file_id=file.file_id)
+                                         file_id=file.file_id,
+                                         caption=caption)
     elif apk == 'apk2':
         await repository.apk2.create_apk(name=file.file_name,
-                                                    file_id=file.file_id)
+                                         file_id=file.file_id,
+                                         caption=caption)
         
     return message.answer(text=i18n.messages.upload_apk_ok(name=file.file_name))
 

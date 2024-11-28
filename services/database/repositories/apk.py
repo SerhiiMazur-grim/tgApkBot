@@ -21,16 +21,18 @@ class APK1Repository(BaseRepository):
         return rez.all()[-1]
     
     
-    async def create_apk(self, name, file_id):
+    async def create_apk(self, name: str, file_id: str, caption: str):
         apk: APK1 = APK1(name=name,
-                         file_id=file_id)
+                         file_id=file_id,
+                         caption=caption)
         await self.commit(apk)
     
     
-    async def update_apk(self, id: str|int, name: str, file_id: str):
+    async def update_apk(self, id: str|int, name: str, file_id: str, caption: str):
         apk: APK1 = await self.get_by_id(id)
         apk.name = name
         apk.file_id = file_id
+        apk.caption = caption
         await self.commit(apk)
     
     
@@ -58,16 +60,18 @@ class APK2Repository(BaseRepository):
         return rez.all()[-1]
     
     
-    async def create_apk(self, name, file_id):
+    async def create_apk(self, name: str, file_id: str, caption: str):
         apk: APK2 = APK2(name=name,
-                         file_id=file_id)
+                         file_id=file_id,
+                         caption=caption)
         await self.commit(apk)
     
     
-    async def update_apk(self, id: str|int, name: str, file_id: str):
+    async def update_apk(self, id: str|int, name: str, file_id: str, caption: str):
         apk: APK2 = await self.get_by_id(id)
         apk.name = name
         apk.file_id = file_id
+        apk.caption = caption
         await self.commit(apk)
     
     
