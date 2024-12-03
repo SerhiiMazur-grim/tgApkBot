@@ -9,7 +9,8 @@ from .commands_handlers import (
     add_image,
     ref_start_message,
     apk,
-    send_post
+    send_post,
+    category
 )
 
 
@@ -22,5 +23,6 @@ router.include_routers(
     add_image.router,
     ref_start_message.router,
     apk.router,
-    send_post.router
+    send_post.router,
+    category.router
 )

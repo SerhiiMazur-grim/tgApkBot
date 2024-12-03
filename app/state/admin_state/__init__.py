@@ -8,6 +8,7 @@ from .commands_state import (
     LoadApkState,
     UpdateApkState,
     PostState,
+    AddCategoryState
 )
 
 __all__ = [
@@ -20,5 +21,5 @@ __all__ = [
     'LoadApkState',
     'UpdateApkState',
     'PostState',
-    
+    'AddCategoryState',
 ]

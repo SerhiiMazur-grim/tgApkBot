@@ -18,6 +18,10 @@ class AddImgToGalery(StatesGroup):
     img = State()
 
 
+class AddCategoryState(StatesGroup):
+    cat = State()
+
+
 class GetRefStartState(StatesGroup):
     ref = State()
     img = State()

@@ -23,19 +23,25 @@ class GaleryRepository(BaseRepository):
         return result.all()
     
     
+    async def get_all_images_by_cat(self, cat: int) -> list[Galery]:
+        result = await self._session.scalars(select(Galery).where(Galery.category_id==cat))
+        return result.all()
+    
+    
     async def get_all_image_ids(self) -> List[str]:
         rez = await self._session.scalars(select(Galery.img_id))
         return rez.all()
         
 
-    async def create_image(self, img_id: str) -> Galery:
-        image: Galery = Galery(img_id = img_id)
+    async def create_image(self, img_id: str, cat: int) -> Galery:
+        image: Galery = Galery(img_id = img_id,
+                               category_id = cat)
         await self.commit(image)
         return image
     
     
-    async def create_images(self, img_ids: list[str]) -> list[Galery]:
-        images = [Galery(img_id=img_id) for img_id in img_ids]
+    async def create_images(self, img_ids: list[str], cat) -> list[Galery]:
+        images = [Galery(img_id=img_id, category_id=cat) for img_id in img_ids]
         self._session.add_all(images)
         await self._session.commit()
         return images

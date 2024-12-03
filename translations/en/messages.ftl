@@ -63,6 +63,13 @@ messages-upload_apk_ok = File { $name } upload/update successfully👍
 messages-send_me_post = Send me your post please⤵️
 messages-is_post = This is your post? ⤵️
 messages-send_this_post = Send this post to all users?
+messages-is_post = This is your post? ⤵️
+messages-send_category = Please send me category title⤵️
+messages-is_not_cat = This is not category title😢
+    Please send me category title⤵️
+messages-cat_is_created = Category:
+    { $category }
+    is created👍
 
 messages-something_went_wrong = Oops! Something went wrong... 
 
