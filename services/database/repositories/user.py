@@ -38,6 +38,11 @@ class UserRepository(BaseRepository):
             Optional[DBUser],
             await self._session.scalars(select(DBUser).where(DBUser.referal == referal)),
         )
+    
+    
+    async def get_user_local(self, id:int):
+        locale = await self._session.scalar(select(DBUser.locale).where(DBUser.id==id))
+        return locale
 
 
     async def create_from_telegram(self, user: User, locale: str,

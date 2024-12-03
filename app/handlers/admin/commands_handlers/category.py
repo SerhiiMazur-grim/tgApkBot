@@ -40,10 +40,9 @@ async def get_category(message: Message, i18n: I18nContext, state: FSMContext, r
         return message.answer(text=i18n.messages.is_not_cat())
     await state.clear()
     title_list = title.split('\n')
-    if len(title_list)>1:
-        category = '\n'.join(title_list)
-        await repository.category.create_categories(title_list)
-    else:
-        category = title
-        await repository.category.create_category(title)
+    if len(title_list)!=3:
+        return message.answer(text=i18n.messages.is_not_cat())
+
+    category = '\n'.join(title_list)
+    await repository.category.create_category(title_list)
     return message.answer(text=i18n.messages.cat_is_created(category=category))

@@ -11,7 +11,8 @@ from .base import BaseRepository
 
 class CategoryRepository(BaseRepository):
     
-    async def get(self, id: int) -> Optional[GaleryCategory]:
+    async def get(self, id: int | str) -> Optional[GaleryCategory]:
+        id = int(id)
         return cast(
             Optional[GaleryCategory],
             await self._session.scalar(select(GaleryCategory).where(GaleryCategory.id == id)),
@@ -23,23 +24,28 @@ class CategoryRepository(BaseRepository):
         return result.all()
     
     
+    async def get_titles_and_id(self, local: str):
+        if local == 'ru':
+            rez = await self._session.execute(select(GaleryCategory.title_ru, GaleryCategory.id))
+        elif local == 'uk':
+            rez = await self._session.execute(select(GaleryCategory.title_ua, GaleryCategory.id))
+        else:
+            rez = await self._session.execute(select(GaleryCategory.title_en, GaleryCategory.id))
+        return rez.all()
+    
+    
     async def get_cat_images(self, id: int | str) -> List[str]:
         id = int(id)
         rez = await self._session.scalars(select(GaleryCategory.images).where(GaleryCategory.id==id))
         return rez.all()
         
 
-    async def create_category(self, title: str) -> GaleryCategory:
-        cat: GaleryCategory = GaleryCategory(title=title)
+    async def create_category(self, title: list[str]) -> GaleryCategory:
+        cat: GaleryCategory = GaleryCategory(title_en=title[0],
+                                             title_ua=title[1],
+                                             title_ru=title[2])
         await self.commit(cat)
         return cat
-    
-    
-    async def create_categories(self, titles: list[str]) -> list[GaleryCategory]:
-        categoris = [GaleryCategory(title=title) for title in titles]
-        self._session.add_all(categoris)
-        await self._session.commit()
-        return categoris
     
     
     async def delete_category(self, cat_id: str | int) -> None:
@@ -49,5 +55,5 @@ class CategoryRepository(BaseRepository):
         )
         deleted_cat = rez.scalars().first()
         await self.commit()
-        return deleted_cat.title
+        return deleted_cat.title_ua
         

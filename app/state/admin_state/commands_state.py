@@ -15,6 +15,7 @@ class DelSubChannelState(StatesGroup):
 
 
 class AddImgToGalery(StatesGroup):
+    cat = State()
     img = State()
 
 

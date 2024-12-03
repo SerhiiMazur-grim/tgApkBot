@@ -3,7 +3,8 @@ from .commands_ikb import (
     del_sub_channel_ikb,
     del_ref_ikb,
     update_apk_ikb,
-    send_post_ikb
+    send_post_ikb,
+    choose_cat_ikb
 )
 
 __all__ = [
@@ -12,4 +13,6 @@ __all__ = [
     'del_ref_ikb',
     'update_apk_ikb',
     'send_post_ikb',
+    'choose_cat_ikb',
+    
 ]

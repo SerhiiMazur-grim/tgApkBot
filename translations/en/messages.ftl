@@ -16,6 +16,7 @@ messages-sub_channel_is_delete = Channel { $username } successfully delete!
 messages-you_not_sub = You not sub on this channels, please subscibe to continue
 messages-you_is_sub = Great, you're subscribed👍
 messages-choose_apk = Choose APK to download⤵️
+messages-choose_cat_for_upload_image = Choose category⤵️
 messages-send_me_images = Send me one or many images for adding to gallery⤵️
 messages-imgs_added = Images(image) added to gallery👍
 messages-catalog_empty = Sory gallery is empty now😢
@@ -64,7 +65,10 @@ messages-send_me_post = Send me your post please⤵️
 messages-is_post = This is your post? ⤵️
 messages-send_this_post = Send this post to all users?
 messages-is_post = This is your post? ⤵️
-messages-send_category = Please send me category title⤵️
+messages-send_category = Please send me category titles⤵️
+    EN title text
+    UA title text
+    RU title text
 messages-is_not_cat = This is not category title😢
     Please send me category title⤵️
 messages-cat_is_created = Category:

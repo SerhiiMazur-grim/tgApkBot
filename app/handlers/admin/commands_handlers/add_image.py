@@ -12,11 +12,11 @@ from aiogram_i18n import I18nContext
 from services.database import SubChannel
 from app.filters import PrivateChatFilter
 from app.state.admin_state import AddImgToGalery
-from app.keyboards.inline_kb.admin_ikb import abort_command_ikb
+from app.keyboards.inline_kb.admin_ikb import abort_command_ikb, choose_cat_ikb
 from utils import clear_state
 
 if TYPE_CHECKING:
-    from services.database import Repository
+    from services.database import Repository, DBUser
 
 
 router: Final[Router] = Router(name=__name__)
@@ -24,12 +24,19 @@ router: Final[Router] = Router(name=__name__)
 
 @router.message(Command('add_image_to_galery'))
 async def start_add_img_to_galery(message: Message, i18n: I18nContext,
-                                  state: FSMContext) -> TelegramMethod[Any]:
+                                  state: FSMContext,
+                                  user: DBUser,
+                                  repository: Repository) -> TelegramMethod[Any]:
     await message.delete()
-    await state.set_state(AddImgToGalery.img)
+    await state.set_state(AddImgToGalery.cat)
+    locale = user.locale
+    categories = await repository.category.get_titles_and_id(locale)
+    return message.answer(text=i18n.messages.choose_cat_for_upload_image(),
+                          reply_markup=choose_cat_ikb(i18n, categories))
     
-    return message.answer(text=i18n.messages.send_me_images(),
-                          reply_markup=abort_command_ikb(i18n))
+    
+    
+    # return message.answer(text=i18n.messages.send_me_images())
 
 
 @router.message(AddImgToGalery.img)

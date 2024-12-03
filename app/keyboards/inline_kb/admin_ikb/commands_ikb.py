@@ -56,3 +56,13 @@ def send_post_ikb(i18n: I18nContext) -> InlineKeyboardMarkup:
     ikb.adjust(1)
     
     return ikb.as_markup()
+
+
+def choose_cat_ikb(i18n: I18nContext, data: list[tuple]):
+    ikb = InlineKeyboardBuilder()
+    for title, id in data:
+        ikb.button(text=title, callback_data=str(id))
+    ikb.button(text=i18n.ik_button.abort(), callback_data=ABORT_COMMAND)
+    ikb.adjust(1)
+    
+    return ikb.as_markup()

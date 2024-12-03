@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 3f7ae9709b8d
+Revision ID: 426863764d20
 Revises: 
-Create Date: 2024-12-03 18:15:53.388306
+Create Date: 2024-12-03 19:08:56.964904
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "3f7ae9709b8d"
+revision: str = "426863764d20"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -54,7 +54,9 @@ def upgrade() -> None:
     op.create_table(
         "galery_category",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
-        sa.Column("title", sa.String(length=100), nullable=False),
+        sa.Column("title_en", sa.String(length=100), nullable=False),
+        sa.Column("title_ua", sa.String(length=100), nullable=False),
+        sa.Column("title_ru", sa.String(length=100), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column(
             "updated_at",
@@ -63,7 +65,9 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint("title"),
+        sa.UniqueConstraint("title_en"),
+        sa.UniqueConstraint("title_ru"),
+        sa.UniqueConstraint("title_ua"),
     )
     op.create_table(
         "ref_start_text",

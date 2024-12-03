@@ -14,5 +14,7 @@ class GaleryCategory(Base, TimestampMixin):
     __tablename__ = "galery_category"
     
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    title: Mapped[str] = mapped_column(String(length=100), unique=True)
+    title_en: Mapped[str] = mapped_column(String(length=100), unique=True)
+    title_ua: Mapped[str] = mapped_column(String(length=100), unique=True)
+    title_ru: Mapped[str] = mapped_column(String(length=100), unique=True)
     images: Mapped[List[Galery]] = relationship('Galery', back_populates='category', cascade='all, delete-orphan')
