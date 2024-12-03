@@ -6,6 +6,7 @@ from config.settings import Settings
 
 async def set_commands(bot: Bot, settings: Settings) -> None:
     admin_id: int = settings.admin_chat_id
+    print(admin_id)
     
     all_private_chats_commands = [
         BotCommand(command='start',

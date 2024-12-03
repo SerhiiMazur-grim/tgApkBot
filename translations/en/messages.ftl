@@ -22,9 +22,32 @@ messages-catalog_empty = Sory gallery is empty now😢
 messages-add_ref = Send me referral ident⤵️
 messages-ref_too_long = Referral ident too long (more then 64 characters)
     Please send me correct referral ident👍⤵️
-messages-add_en_text = Send me EN greetings text⤵️
-messages-add_ua_text = Send me UA greetings text⤵️
-messages-add_ru_text = Send me RU greetings text⤵️
+messages-add_ref_img = Please send me image⤵️
+messages-add_ref_text = Please send me text for EN, UA, RU languages separate with "+"
+    """
+    EN text
+    +
+    UA text
+    +
+    RU text
+    """
+messages-mis_text = Missing text for one or more languages, check your message and send me correct text
+messages-add_ref_btn_text = Please send me text for EN, UA, RU buttons separate with "+"
+    """
+    EN button text
+    +
+    UA button text
+    +
+    RU button text
+    """
+messages-add_ref_answer_text = Please send me answer text for EN, UA, RU languages separate with "+"
+    """
+    EN answer text
+    +
+    UA answer text
+    +
+    RU answer text
+    """
 messages-ref_wrong_data = You send me wrong data😢
     Please send me correct data👍⤵️
 messages-ref_created = Referral { $ref } and greetings is created successfully👍

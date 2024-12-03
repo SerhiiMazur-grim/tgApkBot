@@ -7,7 +7,7 @@ from .commands_state import (
     DelRefStartState,
     LoadApkState,
     UpdateApkState,
-    PostState
+    PostState,
 )
 
 __all__ = [

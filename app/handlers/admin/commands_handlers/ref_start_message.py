@@ -45,50 +45,57 @@ async def get_ref(message: Message, i18n: I18nContext,
                               reply_markup=abort_command_ikb(i18n))
     
     await state.update_data(ref=message.text)
+    await state.set_state(GetRefStartState.img)
+    return message.answer(text=i18n.messages.add_ref_img())
+
+
+@router.message(GetRefStartState.img)
+async def get_ref_img(message: Message, i18n: I18nContext, state: FSMContext):
+    img = message.photo
+    if not img:
+        return message.answer(text=i18n.messages.is_not_image_for_get_id())
+    await state.update_data(img=img[-1].file_id)
     await state.set_state(GetRefStartState.en)
-    return message.answer(text=i18n.messages.add_en_text())
+    return message.answer(text=i18n.messages.add_ref_text())
 
 
 @router.message(GetRefStartState.en)
-async def get_ref_en(message: Message, i18n: I18nContext, 
-                  state: FSMContext) -> TelegramMethod[Any]:
-    if not message.text:
-        return await wrong_data(message, i18n)
-    
-    await state.update_data(en=message.text)
-    await state.set_state(GetRefStartState.ua)
-    return message.answer(text=i18n.messages.add_ua_text())
+async def get_ref_text(message: Message, i18n: I18nContext, state: FSMContext):
+    txt_list: list[str] = message.text.split('+')
+    if len(txt_list) != 3:
+        return message.answer(text=i18n.messages.mis_text())
+    await state.update_data(en=txt_list[0])
+    await state.update_data(ua=txt_list[1])
+    await state.update_data(ru=txt_list[2])
+    await state.set_state(GetRefStartState.btn_en)
+    return message.answer(text=i18n.messages.add_ref_btn_text())
 
 
-@router.message(GetRefStartState.ua)
-async def get_ref_ua(message: Message, i18n: I18nContext, 
-                  state: FSMContext) -> TelegramMethod[Any]:
-    if not message.text:
-        return await wrong_data(message, i18n)
-    
-    await state.update_data(ua=message.text)
-    await state.set_state(GetRefStartState.ru)
-    return message.answer(text=i18n.messages.add_ru_text())
+@router.message(GetRefStartState.btn_en)
+async def get_ref_btn_text(message: Message, i18n: I18nContext, state: FSMContext):
+    btn_txt_list: list[str] = message.text.split('+')
+    if len(btn_txt_list) != 3:
+        return message.answer(text=i18n.messages.mis_text())
+    await state.update_data(btn_en=btn_txt_list[0])
+    await state.update_data(btn_ua=btn_txt_list[1])
+    await state.update_data(btn_ru=btn_txt_list[2])
+    await state.set_state(GetRefStartState.answer_en)
+    return message.answer(text=i18n.messages.add_ref_answer_text())
 
 
-@router.message(GetRefStartState.ru)
-async def get_ref_ru(message: Message, bot: Bot, i18n: I18nContext, 
-                  state: FSMContext, repository: Repository) -> TelegramMethod[Any]:
-    if not message.text:
-        return await wrong_data(message, i18n)
-    
-    data: dict = await state.get_data()
-    ref=data.get('ref')
+@router.message(GetRefStartState.answer_en)
+async def get_ref_answer_text(message: Message, bot: Bot, i18n: I18nContext, state: FSMContext, repository: Repository):
+    answer_list: list[str] = message.text.split('+')
+    if len(answer_list) != 3:
+        return message.answer(text=i18n.messages.mis_text())
+    await state.update_data(answer_en=answer_list[0])
+    await state.update_data(answer_ua=answer_list[1])
+    await state.update_data(answer_ru=answer_list[2])
+    data = await state.get_data()
     await state.clear()
-    ref_start = await repository.ref_message.create_ref(
-        bot=bot,
-        ref=data.get('ref'),
-        en=data.get('en'),
-        ua=data.get('ua'),
-        ru=message.text
-    )
-    return message.answer(text=i18n.messages.ref_created(ref=ref_start.ref_url))
-
+    ref_url = await repository.ref_message.create_ref(bot, data)
+    return message.answer(text=i18n.messages.ref_created(ref=ref_url))
+    
 
 @router.message(Command('delete_ref_start'))
 async def get_ref_start_to_del(message: Message, i18n: I18nContext,
