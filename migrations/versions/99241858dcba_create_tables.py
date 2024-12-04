@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 426863764d20
+Revision ID: 99241858dcba
 Revises: 
-Create Date: 2024-12-03 19:08:56.964904
+Create Date: 2024-12-04 13:04:22.509286
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "426863764d20"
+revision: str = "99241858dcba"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -138,10 +138,7 @@ def upgrade() -> None:
             server_default=sa.text("(CURRENT_TIMESTAMP)"),
             nullable=False,
         ),
-        sa.ForeignKeyConstraint(
-            ["category_id"],
-            ["galery_category.id"],
-        ),
+        sa.ForeignKeyConstraint(["category_id"], ["galery_category.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
     # ### end Alembic commands ###

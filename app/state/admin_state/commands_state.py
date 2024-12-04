@@ -23,6 +23,10 @@ class AddCategoryState(StatesGroup):
     cat = State()
 
 
+class DellCategoryState(StatesGroup):
+    cat = State()
+
+
 class GetRefStartState(StatesGroup):
     ref = State()
     img = State()

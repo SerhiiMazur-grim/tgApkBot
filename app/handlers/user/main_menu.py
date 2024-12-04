@@ -44,6 +44,7 @@ async def get_apk_handler(message: Message, bot:Bot, user: DBUser,
 @router.message(PrivateChatFilter(), F.text == LazyProxy('button-galery'))
 async def get_category(message: Message, i18n: I18nContext, state: FSMContext, user: DBUser, repository: Repository):
     await clear_state(state)
+    await message.delete()
     await state.set_state(CatalogState.category)
     locale = user.locale
     categories = await repository.category.get_titles_and_id(locale)

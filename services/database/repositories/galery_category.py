@@ -50,10 +50,15 @@ class CategoryRepository(BaseRepository):
     
     async def delete_category(self, cat_id: str | int) -> None:
         cat_id = int(cat_id)
-        rez = await self._session.execute(
-            delete(GaleryCategory).where(GaleryCategory.id == cat_id).returning(GaleryCategory)
-        )
-        deleted_cat = rez.scalars().first()
-        await self.commit()
-        return deleted_cat.title_ua
-        
+        # rez = await self._session.execute(
+        #     delete(GaleryCategory).where(GaleryCategory.id == cat_id).returning(GaleryCategory)
+        # )
+        # deleted_cat = rez.scalars().first()
+        # await self.commit()
+        # return deleted_cat.title_ua
+        category = await self._session.get(GaleryCategory, cat_id)
+        if category:
+            await self._session.delete(category)
+            await self.commit()
+            return category.title_ua
+        return None

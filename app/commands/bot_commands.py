@@ -19,6 +19,8 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
                    description='–  Get the image ID'),
         BotCommand(command='add_category',
                    description='–  Add category for image galery'),
+        BotCommand(command='delete_category',
+                   description='–  Delete category and images'),
         BotCommand(command='add_image_to_galery',
                    description='–  Add images to galery'),
         BotCommand(command='add_sub_channel',

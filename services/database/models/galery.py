@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base, Int64, TimestampMixin
@@ -15,5 +15,5 @@ class Galery(Base, TimestampMixin):
     
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     img_id: Mapped[str]
-    category_id: Mapped[int] = mapped_column(ForeignKey('galery_category.id'))
+    category_id: Mapped[int] = mapped_column(Integer, ForeignKey('galery_category.id', ondelete='CASCADE'))
     category: Mapped[GaleryCategory] = relationship('GaleryCategory', back_populates='images')
