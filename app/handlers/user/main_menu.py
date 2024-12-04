@@ -9,6 +9,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram_i18n import I18nContext, LazyProxy
 
 from app.keyboards.inline_kb.user_ikb import apk_files_ikb, galery_ikb
+from app.keyboards.inline_kb.admin_ikb import choose_cat_ikb
 from app.filters import PrivateChatFilter
 from app.state.user_state import CatalogState
 from utils import clear_state, is_subscribe
@@ -41,14 +42,23 @@ async def get_apk_handler(message: Message, bot:Bot, user: DBUser,
 
 
 @router.message(PrivateChatFilter(), F.text == LazyProxy('button-galery'))
-async def to_galery(message: Message, i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod[Any]:
-    user_id = message.chat.id
+async def get_category(message: Message, i18n: I18nContext, state: FSMContext, user: DBUser, repository: Repository):
     await clear_state(state)
-    await message.delete()
-    
-    catalog = await repository.galery.get_all_image_ids()
+    await state.set_state(CatalogState.category)
+    locale = user.locale
+    categories = await repository.category.get_titles_and_id(locale)
+    return message.answer(text=i18n.messages.choose_cat_for_upload_image(),
+                          reply_markup=choose_cat_ikb(i18n, categories))
+
+
+@router.callback_query(CatalogState.category)
+async def to_galery(call: CallbackQuery, i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod[Any]:
+    user_id = call.message.chat.id
+    await call.message.delete()
+    cat = int(call.data)
+    catalog = await repository.galery.get_all_images_ids_by_cat(cat)
     if not catalog:
-        return message.answer(text=i18n.messages.catalog_empty())
+        return call.message.answer(text=i18n.messages.catalog_empty())
     
     await state.set_state(CatalogState.page)
     await state.update_data({
@@ -56,7 +66,7 @@ async def to_galery(message: Message, i18n: I18nContext, state: FSMContext, repo
         'pages': len(catalog),
         'page': 1,
     })
-    return message.answer_photo(photo=catalog[0],
+    return call.message.answer_photo(photo=catalog[0],
                                 reply_markup=galery_ikb('1', len(catalog), user_id))
 
 

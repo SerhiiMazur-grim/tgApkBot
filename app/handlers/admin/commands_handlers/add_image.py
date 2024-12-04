@@ -35,14 +35,19 @@ async def start_add_img_to_galery(message: Message, i18n: I18nContext,
                           reply_markup=choose_cat_ikb(i18n, categories))
     
     
-    
-    # return message.answer(text=i18n.messages.send_me_images())
+@router.callback_query(AddImgToGalery.cat)
+async def get_cat(call: CallbackQuery, i18n: I18nContext, state: FSMContext):
+    await call.message.delete()
+    await state.update_data(cat=call.data)
+    await state.set_state(AddImgToGalery.img)
+    return call.message.answer(text=i18n.messages.send_me_images())
 
 
 @router.message(AddImgToGalery.img)
 async def collect_images(message: Message, bot: Bot, i18n: I18nContext,
                          state: FSMContext, album: List[Message] | None,
                          repository: Repository) -> TelegramMethod[Any]:
+    cat = await state.get_value('cat')
     await clear_state(state)
     
     if album:
@@ -50,11 +55,11 @@ async def collect_images(message: Message, bot: Bot, i18n: I18nContext,
         for msg in album:
             img_id = msg.photo[-1].file_id
             img_ids.append(img_id)
-        await repository.galery.create_images(img_ids)
+        await repository.galery.create_images(img_ids, cat)
         chat_id = album[0].from_user.id
         return await bot.send_message(chat_id=chat_id, text=i18n.messages.imgs_added())
     
     else:
         img_id = message.photo[-1].file_id
-        await repository.galery.create_image(img_id)
+        await repository.galery.create_image(img_id, cat)
         return message.answer(text=i18n.messages.imgs_added())

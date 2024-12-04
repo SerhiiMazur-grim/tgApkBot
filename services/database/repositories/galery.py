@@ -23,8 +23,8 @@ class GaleryRepository(BaseRepository):
         return result.all()
     
     
-    async def get_all_images_by_cat(self, cat: int) -> list[Galery]:
-        result = await self._session.scalars(select(Galery).where(Galery.category_id==cat))
+    async def get_all_images_ids_by_cat(self, cat: int) -> list[Galery]:
+        result = await self._session.scalars(select(Galery.img_id).where(Galery.category_id==cat))
         return result.all()
     
     
