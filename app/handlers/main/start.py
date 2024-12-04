@@ -9,19 +9,19 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram_i18n import I18nContext
 
-from services.database import DBUser
+from services.database import DBUser, Repository
 from app.keyboards.reply_kb.user_rkb import main_keyboard
 from app.keyboards.inline_kb.user_ikb import ref_st_ikb
 from app.filters import PrivateChatFilter
 from app.state.user_state import UserRefStartState
 from utils import clear_state, is_subscribe
-
-if TYPE_CHECKING:
-    from services.database import Repository
+from config.settings import Settings
+# if TYPE_CHECKING:
+#     from services.database import Repository
 
 
 router: Final[Router] = Router(name=__name__)
-
+s = Settings()
 
 @router.message(PrivateChatFilter(), CommandStart())
 async def start_command(message: Message, i18n: I18nContext,

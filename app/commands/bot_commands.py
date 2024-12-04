@@ -5,8 +5,7 @@ from config.settings import Settings
 
 
 async def set_commands(bot: Bot, settings: Settings) -> None:
-    admin_id: int = settings.admin_chat_id
-    print(admin_id)
+    admins_id: int = settings.admin_chat_id
     
     all_private_chats_commands = [
         BotCommand(command='start',
@@ -47,5 +46,6 @@ async def set_commands(bot: Bot, settings: Settings) -> None:
     
     await bot.set_my_commands(commands=all_private_chats_commands,
                               scope=BotCommandScopeAllPrivateChats())
-    await bot.set_my_commands(commands=admin_commands,
-                              scope=BotCommandScopeChat(chat_id=admin_id))
+    for admin_id in admins_id:
+        await bot.set_my_commands(commands=admin_commands,
+                                scope=BotCommandScopeChat(chat_id=admin_id))

@@ -1,5 +1,5 @@
 import secrets
-
+from typing import List
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     api_id: SecretStr
     api_hash: SecretStr
     
-    admin_chat_id: int
+    admin_chat_id: List[int]
     
     postgres_host: str
     postgres_db: str

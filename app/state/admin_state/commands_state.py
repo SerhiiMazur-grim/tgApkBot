@@ -61,5 +61,6 @@ class UpdateApkState(StatesGroup):
 
 
 class PostState(StatesGroup):
+    media = State()
     post = State()
     send = State()

@@ -8,7 +8,7 @@ from aiogram_i18n import I18nContext
 
 from config.settings import Settings
 from app.keyboards.inline_kb.user_ikb import channel_list_to_sub_ikb
-
+from .admin_check import is_admin
 from services.database import Repository, DBUser
 
 
@@ -17,7 +17,7 @@ settings = Settings()
 
 async def is_subscribe(message: Message | CallbackQuery, bot: Bot, i18n: I18nContext,
                         user: DBUser, repository: Repository):
-    if user.id == settings.admin_chat_id:
+    if is_admin(user.id):
         return True
     
     channels_list = await repository.sub_channel.get_all_channels()
