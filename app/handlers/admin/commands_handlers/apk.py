@@ -48,8 +48,16 @@ async def get_apk_caption(message: Message, i18n: I18nContext,
                        state: FSMContext, repository: Repository):
     caption = message.text
     await state.update_data(caption=caption)
-    await state.set_state(LoadApkState.file)
+    await state.set_state(LoadApkState.name)
     
+    return message.answer(text=i18n.messages.upload_apk_name())
+
+
+@router.message(LoadApkState.name)
+async def get_apk_name(message: Message, i18n: I18nContext, state: FSMContext):
+    name = message.text.strip()
+    await state.update_data(name=name)
+    await state.set_state(LoadApkState.file)
     return message.answer(text=i18n.messages.upload_apk())
 
 
@@ -60,18 +68,19 @@ async def get_apk_file(message: Message, i18n: I18nContext,
     if not file:
         return message.answer(text=i18n.messages.is_not_apk_file())
     apk = await state.get_value('apk')
+    name = await state.get_value('name')
     caption = await state.get_value('caption')
     await state.clear()
     if apk == 'apk1':
-        await repository.apk1.create_apk(name=file.file_name,
+        await repository.apk1.create_apk(name=name,
                                          file_id=file.file_id,
                                          caption=caption)
     elif apk == 'apk2':
-        await repository.apk2.create_apk(name=file.file_name,
+        await repository.apk2.create_apk(name=name,
                                          file_id=file.file_id,
                                          caption=caption)
         
-    return message.answer(text=i18n.messages.upload_apk_ok(name=file.file_name))
+    return message.answer(text=i18n.messages.upload_apk_ok(name=name))
 
 
 @router.message(Command('update_apk'))
@@ -94,13 +103,33 @@ async def get_apk_id(call: CallbackQuery, i18n: I18nContext, state: FSMContext):
     id = data_list[1]
     await state.update_data(apk=apk)
     await state.update_data(id=id)
-    await state.set_state(UpdateApkState.file)
+    await state.set_state(UpdateApkState.caption)
     
-    return call.message.answer(text=i18n.messages.upload_apk())
+    return call.message.answer(text=i18n.messages.send_apk_caption())
+
+
+@router.message(UpdateApkState.caption)
+async def update_apk_caption(message: Message, i18n: I18nContext, state: FSMContext):
+    caption = message.text
+    if not caption:
+        return message.answer(text=i18n.messages.send_apk_caption())
+    await state.update_data(caption=caption)
+    await state.set_state(UpdateApkState.name)
+    return message.answer(text=i18n.messages.upload_apk_name())
+
+
+@router.message(UpdateApkState.name)
+async def update_apk_caption(message: Message, i18n: I18nContext, state: FSMContext):
+    name = message.text
+    if not name:
+        return message.answer(text=i18n.messages.upload_apk_name())
+    await state.update_data(name=name)
+    await state.set_state(UpdateApkState.file)
+    return message.answer(text=i18n.messages.upload_apk())
 
 
 @router.message(UpdateApkState.file)
-async def get_apk1_to_update(message: Message, i18n: I18nContext,
+async def get_apk_to_update(message: Message, i18n: I18nContext,
                        state: FSMContext, repository: Repository):
     file = message.document
     if not file:
@@ -109,16 +138,20 @@ async def get_apk1_to_update(message: Message, i18n: I18nContext,
     await state.clear()
     apk = data.get('apk')
     id = data.get('id')
+    caption = data.get('caption')
+    name = data.get('name')
     
     if apk == APK1_CALL:
         apk: APK1 = await repository.apk1.update_apk(id=id,
-                                                    name=file.file_name,
-                                                    file_id=file.file_id)
+                                                    name=name,
+                                                    file_id=file.file_id,
+                                                    caption=caption)
     elif apk == APK2_CALL:
-        apk: APK2 = await repository.apk1.update_apk(id=id,
-                                                    name=file.file_name,
-                                                    file_id=file.file_id)
+        apk: APK2 = await repository.apk2.update_apk(id=id,
+                                                    name=name,
+                                                    file_id=file.file_id,
+                                                    caption=caption)
     else:
         return message.answer(text=i18n.messages.something_went_wrong())
         
-    return message.answer(text=i18n.messages.upload_apk_ok(name=file.file_name))
+    return message.answer(text=i18n.messages.upload_apk_ok(name=name))

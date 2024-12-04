@@ -48,12 +48,15 @@ class DelRefStartState(StatesGroup):
 class LoadApkState(StatesGroup):
     apk = State()
     caption = State()
+    name = State()
     file = State()
 
 
 class UpdateApkState(StatesGroup):
     apk = State()
     id = State()
+    caption = State()
+    name = State()
     file = State()
 
 
