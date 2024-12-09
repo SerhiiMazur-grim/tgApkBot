@@ -9,7 +9,8 @@ from .base import BaseRepository
 
 
 class UserRepository(BaseRepository):
-    async def get(self, user_id: int) -> Optional[DBUser]:
+    async def get(self, user_id: int|str) -> Optional[DBUser]:
+        user_id = int(user_id)
         return cast(
             Optional[DBUser],
             await self._session.scalar(select(DBUser).where(DBUser.id == user_id)),
@@ -40,7 +41,8 @@ class UserRepository(BaseRepository):
         )
     
     
-    async def get_user_local(self, id:int):
+    async def get_user_local(self, id:int|str):
+        id = int(id)
         locale = await self._session.scalar(select(DBUser.locale).where(DBUser.id==id))
         return locale
 

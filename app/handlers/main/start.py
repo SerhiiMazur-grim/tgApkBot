@@ -25,8 +25,10 @@ s = Settings()
 
 @router.message(PrivateChatFilter(), CommandStart())
 async def start_command(message: Message, i18n: I18nContext,
-                        state: FSMContext, user: DBUser,
+                        state: FSMContext,
                         repository: Repository) -> TelegramMethod[Any]:
+    user_id = message.from_user.id
+    user: DBUser = await repository.user.get(user_id)
     await clear_state(state)
     
     param = message.text.split()
@@ -48,7 +50,9 @@ async def start_command(message: Message, i18n: I18nContext,
 
 
 @router.callback_query(UserRefStartState.ref)
-async def ref_start(call: CallbackQuery, bot: Bot, i18n: I18nContext, state: FSMContext, user: DBUser, repository: Repository):
+async def ref_start(call: CallbackQuery, bot: Bot, i18n: I18nContext, state: FSMContext, repository: Repository):
+    user_id = call.from_user.id
+    user: DBUser = await repository.user.get(user_id)
     if not call.message.photo:
             await call.message.delete()
     is_sub = await is_subscribe(call, bot, i18n, user, repository)

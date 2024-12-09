@@ -16,7 +16,7 @@ from app.keyboards.inline_kb.admin_ikb import abort_command_ikb, choose_cat_ikb
 from utils import clear_state
 
 if TYPE_CHECKING:
-    from services.database import Repository, DBUser
+    from services.database import Repository
 
 
 router: Final[Router] = Router(name=__name__)
@@ -49,11 +49,12 @@ async def get_category(message: Message, i18n: I18nContext, state: FSMContext, r
 
 
 @router.message(Command('delete_category'))
-async def cat_to_dell(message: Message, i18n: I18nContext, state: FSMContext, user: DBUser, repository: Repository):
+async def cat_to_dell(message: Message, i18n: I18nContext, state: FSMContext, repository: Repository):
+    user_id = message.from_user.id
     await message.delete()
     await clear_state(state)
     await state.set_state(DellCategoryState.cat)
-    locale = user.locale
+    locale = await repository.user.get_user_local(user_id)
     categories = await repository.category.get_titles_and_id(locale)
     return message.answer(text=i18n.messages.choose_cat_for_delete(),
                           reply_markup=choose_cat_ikb(i18n, categories))

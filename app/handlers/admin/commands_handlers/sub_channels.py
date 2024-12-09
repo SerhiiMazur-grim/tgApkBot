@@ -31,8 +31,8 @@ async def add_sub_channel(message: Message, i18n: I18nContext,
 
 
 @router.message(GetChannelUsernameState.username)
-async def get_sub_channel_username(message: Message, bot: Bot, i18n: I18nContext,
-                                   state: FSMContext, repository: Repository) -> TelegramMethod[Any]:
+async def get_sub_channel_username(message: Message, i18n: I18nContext,
+                                   state: FSMContext) -> TelegramMethod[Any]:
     if not message.text:
         return message.answer(text=i18n.messages.is_not_channel_username(),
                               reply_markup=abort_command_ikb(i18n))

@@ -25,11 +25,11 @@ router: Final[Router] = Router(name=__name__)
 @router.message(Command('add_image_to_galery'))
 async def start_add_img_to_galery(message: Message, i18n: I18nContext,
                                   state: FSMContext,
-                                  user: DBUser,
                                   repository: Repository) -> TelegramMethod[Any]:
+    user_id = message.from_user.id
     await message.delete()
     await state.set_state(AddImgToGalery.cat)
-    locale = user.locale
+    locale = await repository.user.get_user_local(user_id)
     categories = await repository.category.get_titles_and_id(locale)
     return message.answer(text=i18n.messages.choose_cat_for_upload_image(),
                           reply_markup=choose_cat_ikb(i18n, categories))

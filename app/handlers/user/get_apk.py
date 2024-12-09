@@ -20,7 +20,7 @@ router: Final[Router] = Router(name=__name__)
 
 
 @router.callback_query(F.data == APK_1)
-async def get_apk_1_handler(callback_query: CallbackQuery, bot:Bot, user: DBUser,
+async def get_apk_1_handler(callback_query: CallbackQuery,
                             i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod:
     await clear_state(state)
     await callback_query.message.delete()
@@ -31,7 +31,7 @@ async def get_apk_1_handler(callback_query: CallbackQuery, bot:Bot, user: DBUser
 
 
 @router.callback_query(F.data == APK_2)
-async def get_apk_2_handler(callback_query: CallbackQuery, bot:Bot, user: DBUser,
+async def get_apk_2_handler(callback_query: CallbackQuery,
                             i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod:
     await clear_state(state)
     await callback_query.message.delete()

@@ -84,7 +84,8 @@ async def get_ref_btn_text(message: Message, i18n: I18nContext, state: FSMContex
 
 
 @router.message(GetRefStartState.answer_en)
-async def get_ref_answer_text(message: Message, bot: Bot, i18n: I18nContext, state: FSMContext, repository: Repository):
+async def get_ref_answer_text(message: Message, bot: Bot, i18n: I18nContext,
+                              state: FSMContext, repository: Repository):
     answer_list: list[str] = message.text.split('+')
     if len(answer_list) != 3:
         return message.answer(text=i18n.messages.mis_text())

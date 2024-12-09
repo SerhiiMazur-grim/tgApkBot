@@ -28,8 +28,10 @@ async def init_change_lang(message: Message, state: FSMContext, i18n: I18nContex
 
 @router.callback_query(F.data.startswith('language'))
 async def change_lang(callback_query: CallbackQuery, i18n: I18nContext,
-                      user: DBUser, repository: Repository) -> TelegramMethod[Any]:
+                      repository: Repository) -> TelegramMethod[Any]:
     await callback_query.message.delete()
+    user_id = callback_query.from_user.id
+    user: DBUser = await repository.user.get(user_id)
     language: str = callback_query.data.split('_')[-1]
     await i18n.manager.set_locale(language, user, repository)
     

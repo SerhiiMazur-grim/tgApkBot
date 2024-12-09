@@ -24,5 +24,7 @@ router: Final[Router] = Router(name=__name__)
 
 @router.callback_query(F.data == CHECK_SUB)
 async def check_user_sub(call: CallbackQuery, bot: Bot, i18n: I18nContext,
-                        user: DBUser, repository: Repository):
+                        repository: Repository):
+    user_id = call.from_user.id
+    user: DBUser = await repository.user.get(user_id)
     await check_sub(call, bot, i18n, user, repository)
