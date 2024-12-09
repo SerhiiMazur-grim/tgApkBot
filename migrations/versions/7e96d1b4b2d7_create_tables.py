@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 46dee53a1e44
+Revision ID: 7e96d1b4b2d7
 Revises: 
-Create Date: 2024-12-09 11:10:20.940567
+Create Date: 2024-12-09 12:18:02.257773
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "46dee53a1e44"
+revision: str = "7e96d1b4b2d7"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,7 +26,9 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("name", sa.String(), nullable=False),
         sa.Column("file_id", sa.String(), nullable=False),
-        sa.Column("caption", sa.String(), nullable=False),
+        sa.Column("caption_en", sa.String(), nullable=False),
+        sa.Column("caption_ua", sa.String(), nullable=False),
+        sa.Column("caption_ru", sa.String(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column(
             "updated_at",
@@ -41,7 +43,9 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("name", sa.String(), nullable=False),
         sa.Column("file_id", sa.String(), nullable=False),
-        sa.Column("caption", sa.String(), nullable=False),
+        sa.Column("caption_en", sa.String(), nullable=False),
+        sa.Column("caption_ua", sa.String(), nullable=False),
+        sa.Column("caption_ru", sa.String(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.Column(
             "updated_at",

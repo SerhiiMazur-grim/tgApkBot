@@ -47,7 +47,9 @@ class DelRefStartState(StatesGroup):
 
 class LoadApkState(StatesGroup):
     apk = State()
-    caption = State()
+    caption_en = State()
+    caption_ua = State()
+    caption_ru = State()
     name = State()
     file = State()
 
@@ -55,7 +57,9 @@ class LoadApkState(StatesGroup):
 class UpdateApkState(StatesGroup):
     apk = State()
     id = State()
-    caption = State()
+    caption_en = State()
+    caption_ua = State()
+    caption_ru = State()
     name = State()
     file = State()
 

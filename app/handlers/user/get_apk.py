@@ -25,8 +25,16 @@ async def get_apk_1_handler(callback_query: CallbackQuery,
     await clear_state(state)
     await callback_query.message.delete()
     apk1 = await repository.apk1.get()
+    user_id = callback_query.from_user.id
+    local = await repository.user.get_user_local(user_id)
+    if local == 'ru':
+        caption = apk1.caption_ru
+    elif local == 'uk':
+        caption = apk1.caption_ua
+    else:
+        caption = apk1.caption_en
     
-    return callback_query.message.answer_document(document=apk1.file_id, caption=apk1.caption)
+    return callback_query.message.answer_document(document=apk1.file_id, caption=caption)
     
 
 
@@ -36,5 +44,13 @@ async def get_apk_2_handler(callback_query: CallbackQuery,
     await clear_state(state)
     await callback_query.message.delete()
     apk2 = await repository.apk2.get()
+    user_id = callback_query.from_user.id
+    local = await repository.user.get_user_local(user_id)
+    if local == 'ru':
+        caption = apk2.caption_ru
+    elif local == 'uk':
+        caption = apk2.caption_ua
+    else:
+        caption = apk2.caption_en
     
-    return callback_query.message.answer_document(document=apk2.file_id, caption=apk2.caption)
+    return callback_query.message.answer_document(document=apk2.file_id, caption=caption)
