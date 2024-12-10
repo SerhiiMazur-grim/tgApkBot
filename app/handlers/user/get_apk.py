@@ -21,12 +21,11 @@ router: Final[Router] = Router(name=__name__)
 
 @router.callback_query(F.data == APK_1)
 async def get_apk_1_handler(callback_query: CallbackQuery,
-                            i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod:
+                            i18n: I18nContext, user: DBUser, state: FSMContext, repository: Repository) -> TelegramMethod:
     await clear_state(state)
     await callback_query.message.delete()
     apk1 = await repository.apk1.get()
-    user_id = callback_query.from_user.id
-    local = await repository.user.get_user_local(user_id)
+    local = user.locale
     if local == 'ru':
         caption = apk1.caption_ru
     elif local == 'uk':
@@ -40,12 +39,11 @@ async def get_apk_1_handler(callback_query: CallbackQuery,
 
 @router.callback_query(F.data == APK_2)
 async def get_apk_2_handler(callback_query: CallbackQuery,
-                            i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod:
+                            i18n: I18nContext, user: DBUser, state: FSMContext, repository: Repository) -> TelegramMethod:
     await clear_state(state)
     await callback_query.message.delete()
     apk2 = await repository.apk2.get()
-    user_id = callback_query.from_user.id
-    local = await repository.user.get_user_local(user_id)
+    local = user.locale
     if local == 'ru':
         caption = apk2.caption_ru
     elif local == 'uk':

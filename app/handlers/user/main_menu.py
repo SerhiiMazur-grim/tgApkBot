@@ -22,13 +22,13 @@ if TYPE_CHECKING:
 router: Final[Router] = Router(name=__name__)
 
 
-# @router.message(PrivateChatFilter(), F.text == LazyProxy('button-get_apk'))
 @router.message(PrivateChatFilter(), LazyFilter('button-get_apk'))
 async def get_apk_handler(message: Message, bot:Bot,
-                            i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod:
+                            i18n: I18nContext, user: DBUser, state: FSMContext, repository: Repository) -> TelegramMethod:
     await clear_state(state)
-    user_id = message.from_user.id
-    user: DBUser = await repository.user.get(user_id)
+    if not user:
+        user_id = message.from_user.id
+        user: DBUser = await repository.user.get(user_id)
     await message.delete()
     
     rez = await is_subscribe(message, bot, i18n, user, repository)
@@ -44,14 +44,12 @@ async def get_apk_handler(message: Message, bot:Bot,
                           reply_markup=apk_files_ikb(i18n, apk1.name, apk2.name))
 
 
-# @router.message(PrivateChatFilter(), F.text == LazyProxy('button-gallery'))
 @router.message(PrivateChatFilter(), LazyFilter('button-gallery'))
-async def get_category(message: Message, i18n: I18nContext, state: FSMContext, repository: Repository):
+async def get_category(message: Message, i18n: I18nContext, user: DBUser, state: FSMContext, repository: Repository):
     await clear_state(state)
     await message.delete()
     await state.set_state(CatalogState.category)
-    user_id = message.from_user.id
-    locale = await repository.user.get_user_local(user_id)
+    locale = user.locale
     categories = await repository.category.get_titles_and_id(locale)
     return message.answer(text=i18n.messages.choose_cat_for_upload_image(),
                           reply_markup=choose_cat_ikb(i18n, categories))
