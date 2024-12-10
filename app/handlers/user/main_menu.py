@@ -6,7 +6,7 @@ from aiogram import Bot, Router, F
 from aiogram.methods import TelegramMethod
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from aiogram_i18n import I18nContext, LazyProxy
+from aiogram_i18n import I18nContext, LazyProxy, LazyFilter, L
 
 from app.keyboards.inline_kb.user_ikb import apk_files_ikb, galery_ikb
 from app.keyboards.inline_kb.admin_ikb import choose_cat_ikb
@@ -22,7 +22,8 @@ if TYPE_CHECKING:
 router: Final[Router] = Router(name=__name__)
 
 
-@router.message(PrivateChatFilter(), F.text == LazyProxy('button-get_apk'))
+# @router.message(PrivateChatFilter(), F.text == LazyProxy('button-get_apk'))
+@router.message(PrivateChatFilter(), LazyFilter('button-get_apk'))
 async def get_apk_handler(message: Message, bot:Bot,
                             i18n: I18nContext, state: FSMContext, repository: Repository) -> TelegramMethod:
     await clear_state(state)
@@ -43,7 +44,8 @@ async def get_apk_handler(message: Message, bot:Bot,
                           reply_markup=apk_files_ikb(i18n, apk1.name, apk2.name))
 
 
-@router.message(PrivateChatFilter(), F.text == LazyProxy('button-galery'))
+# @router.message(PrivateChatFilter(), F.text == LazyProxy('button-gallery'))
+@router.message(PrivateChatFilter(), LazyFilter('button-gallery'))
 async def get_category(message: Message, i18n: I18nContext, state: FSMContext, repository: Repository):
     await clear_state(state)
     await message.delete()

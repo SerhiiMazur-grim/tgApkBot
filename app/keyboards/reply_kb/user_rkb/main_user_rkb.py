@@ -8,10 +8,10 @@ def main_keyboard(i18n: I18nContext, language: str | None = None) -> ReplyKeyboa
     
     if language:
         kb.button(text=i18n.core.get('button-get_apk', language))
-        kb.button(text=i18n.core.get('button-galery', language))
+        kb.button(text=i18n.core.get('button-gallery', language))
     else:
         kb.button(text=i18n.button.get_apk())
-        kb.button(text=i18n.button.galery())
+        kb.button(text=i18n.button.gallery())
     
     kb.adjust(2)
     return kb.as_markup(resize_keyboard=True)
