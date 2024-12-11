@@ -40,7 +40,7 @@ def _setup_outer_middlewares(dispatcher: Dispatcher, settings: Settings) -> None
         default_locale=Locale.DEFAULT,
     )
 
-    # dispatcher.update.outer_middleware(ForbiddenErrorMiddleware())
+    dispatcher.update.outer_middleware(ForbiddenErrorMiddleware())
     dispatcher.update.outer_middleware(DBSessionMiddleware(session_pool=pool))
     dispatcher.update.outer_middleware(UserMiddleware())
     i18n_middleware.setup(dispatcher=dispatcher)

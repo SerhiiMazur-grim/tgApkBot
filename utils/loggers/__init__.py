@@ -14,8 +14,8 @@ settings = Settings()
 
 def setup_logger(level: int = logging.INFO) -> None:
     logging_info = settings.logging_info
-    # filename = settings.logs_to_file
-    filename = None
+    filename = settings.logs_to_file
+    # filename = None
     
     if not logging_info:
         level = logging.WARNING
