@@ -17,7 +17,8 @@ from middlewares import (
     RetryRequestMiddleware,
     UserManager,
     UserMiddleware,
-    ForbiddenErrorMiddleware
+    ForbiddenErrorMiddleware,
+    AlbumMiddleware
 )
 from services.database import create_pool
 from app.handlers import main, user, admin
@@ -39,7 +40,7 @@ def _setup_outer_middlewares(dispatcher: Dispatcher, settings: Settings) -> None
         default_locale=Locale.DEFAULT,
     )
 
-    dispatcher.update.outer_middleware(ForbiddenErrorMiddleware())
+    # dispatcher.update.outer_middleware(ForbiddenErrorMiddleware())
     dispatcher.update.outer_middleware(DBSessionMiddleware(session_pool=pool))
     dispatcher.update.outer_middleware(UserMiddleware())
     i18n_middleware.setup(dispatcher=dispatcher)
@@ -47,6 +48,7 @@ def _setup_outer_middlewares(dispatcher: Dispatcher, settings: Settings) -> None
 
 def _setup_inner_middlewares(dispatcher: Dispatcher) -> None:
     dispatcher.callback_query.middleware(CallbackAnswerMiddleware())
+    dispatcher.message.middleware(AlbumMiddleware())
 
 
 def create_dispatcher(settings: Settings) -> Dispatcher:
@@ -78,8 +80,8 @@ def create_dispatcher(settings: Settings) -> Dispatcher:
     
     dispatcher.include_routers(
         main.router,
-        # admin.router,
-        # user.router
+        admin.router,
+        user.router
     )
     
     _setup_outer_middlewares(dispatcher=dispatcher, settings=settings)

@@ -2,14 +2,15 @@ from typing import Optional, cast
 
 from aiogram.enums import ChatType
 from aiogram.types import Chat, User
-from sqlalchemy import select, update, values
+from sqlalchemy import select, update, values, delete
 
 from ..models import DBUser
 from .base import BaseRepository
 
 
 class UserRepository(BaseRepository):
-    async def get(self, user_id: int) -> Optional[DBUser]:
+    async def get(self, user_id: int|str) -> Optional[DBUser]:
+        user_id = int(user_id)
         return cast(
             Optional[DBUser],
             await self._session.scalar(select(DBUser).where(DBUser.id == user_id)),
@@ -27,11 +28,23 @@ class UserRepository(BaseRepository):
             await self._session.scalars(select(DBUser).where(DBUser.active == True)),
         )
     
+    
+    async def get_all_users_id(self):
+        rez = await self._session.scalars(select(DBUser.id))
+        return rez.all()
+    
+    
     async def get_referal_users(self, referal: str) -> Optional[DBUser]:
         return cast(
             Optional[DBUser],
             await self._session.scalars(select(DBUser).where(DBUser.referal == referal)),
         )
+    
+    
+    async def get_user_local(self, id:int|str):
+        id = int(id)
+        locale = await self._session.scalar(select(DBUser.locale).where(DBUser.id==id))
+        return locale
 
 
     async def create_from_telegram(self, user: User, locale: str,
@@ -52,3 +65,24 @@ class UserRepository(BaseRepository):
 
         await self.commit(db_user)
         return db_user
+    
+    
+    async def update_user_subscribe(self, user: DBUser, subscribe = True):
+        user.subscribe = subscribe
+        await self.commit(user)
+    
+    
+    async def update_user_active(self, user_id: int, active: bool):
+        user: DBUser = await self.get(user_id)
+        user.active = active
+        await self.commit(user)
+    
+    
+    async def delete_user(self, user_id):
+        user_id = int(user_id)
+        rez = await self._session.execute(
+            delete(DBUser).where(DBUser.id == user_id).returning(DBUser)
+        )
+        deleted_user = rez.scalars().first()
+        await self.commit()
+        return deleted_user.name
