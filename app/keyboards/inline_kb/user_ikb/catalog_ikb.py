@@ -17,7 +17,7 @@ def galery_ikb(page, pages, user_id) -> InlineKeyboardMarkup:
     ikb.button(text='⬅️', callback_data=PREV)
     ikb.button(text=f'{page}/{pages}', callback_data='TEST')
     ikb.button(text='➡️', callback_data=NEXT)
-    if user_id == settings.admin_chat_id:
+    if int(user_id) in settings.admin_chat_id:
         ikb.button(text='DELLETE', callback_data=DELL)
     ikb.button(text='Close', callback_data=CLOSE_CATALOG)
     ikb.adjust(3,1)
