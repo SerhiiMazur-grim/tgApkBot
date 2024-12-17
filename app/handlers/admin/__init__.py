@@ -10,7 +10,8 @@ from .commands_handlers import (
     ref_start_message,
     apk,
     send_post,
-    category
+    category,
+    statistica
 )
 
 
@@ -24,5 +25,6 @@ router.include_routers(
     ref_start_message.router,
     apk.router,
     send_post.router,
-    category.router
+    category.router,
+    statistica.router
 )

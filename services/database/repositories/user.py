@@ -1,4 +1,5 @@
 from typing import Optional, cast
+from datetime import timedelta, datetime
 
 from aiogram.enums import ChatType
 from aiogram.types import Chat, User
@@ -86,3 +87,43 @@ class UserRepository(BaseRepository):
         deleted_user = rez.scalars().first()
         await self.commit()
         return deleted_user.name
+    
+    
+    async def statistica(self):
+        time_now = datetime.now()
+        d30 = time_now - timedelta(days=30)
+        d7 = time_now - timedelta(days=7)
+        d1 = time_now - timedelta(days=1)
+        
+        total_users = await self._session.scalars(select(DBUser))
+        total_users = total_users.all()
+        
+        prem_users = await self._session.scalars(select(DBUser).where(DBUser.premium == 1))
+        prem_users = prem_users.all()
+        
+        join_30 = await self._session.scalars(select(DBUser).where(DBUser.created_at > d30))
+        join_30 = join_30.all()
+        
+        join_7 = await self._session.scalars(select(DBUser).where(DBUser.created_at > d7))
+        join_7 = join_7.all()
+        
+        join_1 = await self._session.scalars(select(DBUser).where(DBUser.created_at > d1))
+        join_1 = join_1.all()
+        
+        join_by_ref = await self._session.scalars(select(DBUser).where(DBUser.referal != None))
+        join_by_ref = join_by_ref.all()
+        
+        stata = {
+        'total' : len(total_users),
+        'join_by_ref' : len(join_by_ref),
+        'prem_users' : len(prem_users),
+        'join_30' : len(join_30),
+        'join_7' : len(join_7),
+        'Join_1' : len(join_1),
+        }
+        return stata
+    
+    
+    async def ref_count(self, ref: str):
+        rez = await self._session.scalars(select(DBUser).where(DBUser.referal == ref))
+        return len(rez.all())

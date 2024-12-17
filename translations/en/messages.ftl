@@ -79,6 +79,14 @@ messages-cat_is_created = Category:
     { $category }
     is created👍
 
+messages-statistica = 
+    Total users ➡️ { $total }👥
+    Joined by referral URL ➡️ { $ref_join }👥
+    Users with premium ➡️ { $prem_users }👥
+    Joined in the last 30 days ➡️ { $join_30 }👥
+    Joined in the last 7 days ➡️ { $join_7 }👥
+    Joined in the last 1 day ➡️ { $join_1 }👥
+
 messages-something_went_wrong = Oops! Something went wrong... 
 
 button-get_apk = APK file
@@ -90,3 +98,5 @@ ik_button-check_sub = Check subscription
 ik_button-apk_1 = APK 1
 ik_button-apk_2 = APK 2
 ik_button-abort = ❌Cancel
+ik_button-get_db = Get database file
+ik_button-get_users_ids_file = Get users ids file

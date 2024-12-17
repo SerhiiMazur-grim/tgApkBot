@@ -4,7 +4,8 @@ from .commands_ikb import (
     del_ref_ikb,
     update_apk_ikb,
     send_post_ikb,
-    choose_cat_ikb
+    choose_cat_ikb,
+    stata_ikb
 )
 
 __all__ = [
@@ -14,5 +15,6 @@ __all__ = [
     'update_apk_ikb',
     'send_post_ikb',
     'choose_cat_ikb',
+    'stata_ikb',
     
 ]

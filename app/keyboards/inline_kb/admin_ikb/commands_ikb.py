@@ -4,7 +4,14 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardMarkup
 from aiogram_i18n import I18nContext
 
-from config.callback_data import ABORT_COMMAND, APK1_CALL, APK2_CALL, SEND_POST
+from config.callback_data import (
+    ABORT_COMMAND,
+    APK1_CALL,
+    APK2_CALL,
+    SEND_POST,
+    GET_DB,
+    GET_USERS_IDS_FILE
+)
 from services.database import RefMessage, APK1, APK2
 
 
@@ -64,5 +71,15 @@ def choose_cat_ikb(i18n: I18nContext, data: list[tuple]):
         ikb.button(text=title, callback_data=str(id))
     ikb.button(text=i18n.ik_button.abort(), callback_data=ABORT_COMMAND)
     ikb.adjust(1)
+    
+    return ikb.as_markup()
+
+
+def stata_ikb(i18n: I18nContext) -> InlineKeyboardMarkup:
+    ikb = InlineKeyboardBuilder()
+    ikb.button(text=i18n.ik_button.get_db(), callback_data=GET_DB)
+    ikb.button(text=i18n.ik_button.get_users_ids_file(), callback_data=GET_USERS_IDS_FILE)
+    ikb.button(text=i18n.ik_button.abort(), callback_data=ABORT_COMMAND)
+    ikb.adjust(2, 1)
     
     return ikb.as_markup()
