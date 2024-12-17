@@ -10,7 +10,8 @@ from config.callback_data import (
     APK2_CALL,
     SEND_POST,
     GET_DB,
-    GET_USERS_IDS_FILE
+    GET_USERS_IDS_FILE,
+    GET_USERS_BY_REF
 )
 from services.database import RefMessage, APK1, APK2
 
@@ -79,6 +80,7 @@ def stata_ikb(i18n: I18nContext) -> InlineKeyboardMarkup:
     ikb = InlineKeyboardBuilder()
     ikb.button(text=i18n.ik_button.get_db(), callback_data=GET_DB)
     ikb.button(text=i18n.ik_button.get_users_ids_file(), callback_data=GET_USERS_IDS_FILE)
+    ikb.button(text=i18n.ik_button.get_users_by_ref(), callback_data=GET_USERS_BY_REF)
     ikb.button(text=i18n.ik_button.abort(), callback_data=ABORT_COMMAND)
     ikb.adjust(2, 1)
     

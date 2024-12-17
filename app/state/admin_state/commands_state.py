@@ -68,3 +68,7 @@ class PostState(StatesGroup):
     media = State()
     post = State()
     send = State()
+
+
+class RefUsersCountState(StatesGroup):
+    ref_url = State()

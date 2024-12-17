@@ -87,6 +87,12 @@ messages-statistica =
     Joined in the last 7 days ➡️ { $join_7 }👥
     Joined in the last 1 day ➡️ { $join_1 }👥
 
+messages-send_ref_url = Send me referral url⤵️
+messages-is_not_ref_url = Is not referral url
+    Send me referral url⤵️
+messages-users_count_by_ref = Followed by this referral link ➡️ { $users_count }👥
+messages-no_users_by_ref = Users have not followed this link
+
 messages-something_went_wrong = Oops! Something went wrong... 
 
 button-get_apk = APK file
@@ -100,3 +106,4 @@ ik_button-apk_2 = APK 2
 ik_button-abort = ❌Cancel
 ik_button-get_db = Get database file
 ik_button-get_users_ids_file = Get users ids file
+ik_button-get_users_by_ref = Number of referrals per url
